@@ -37,7 +37,14 @@ return [
             'new-tab' => false
         ],
         [
-            'section' => '****************',
+            'title' => 'Record Expenses',
+            'root' => true,
+            'icon' => 'media/svg/icons/Design/Layers.svg', // or can be 'flaticon-home' or any flaticon-*
+            'page' => 'apps/expenses',
+            'new-tab' => false
+        ],
+        [
+            'section' => '*************************',
         ],
 
         [
@@ -74,7 +81,7 @@ return [
             'submenu' => [
                 [
                     'title' => 'Compose SMS',
-                    'page' => 'features/bootstrap/typography',
+                    'page' => 'apps/composesms',
                     'new-tab' => false,
                 ],
                 [

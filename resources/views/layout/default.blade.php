@@ -54,10 +54,7 @@
         {{-- Includable JS --}}
         @yield('scripts')
 
-        $(function () {
-            $('[data-toggle="popover"]').popover();
-          })
-
+     
         {{-- Vue --}}
         <script src="/js/website.js" type="text/javascript"></script>
 

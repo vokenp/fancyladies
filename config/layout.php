@@ -275,7 +275,8 @@ return [
             'css/app.css',
             'plugins/flaticon/flaticon.css',
             'plugins/flaticon2/flaticon.css',
-            'plugins/font-awesome/4.5.0/css/font-awesome.min.css'
+            'plugins/font-awesome/4.5.0/css/font-awesome.min.css',
+            'css/bootstrap-datetimepicker.min.css'
         ],
         'js' => [
             'plugins/global/plugins.bundle.js',
@@ -285,6 +286,7 @@ return [
             'js/popper.min.js',
             'plugins/font-awesome/4.5.0/js/font-awesome.min.js',
             'js/jquery.maskedinput.min.js',
+            'js/bootstrap-datetimepicker.min.js',
             'js/myscripts.js'
         ],
     ],

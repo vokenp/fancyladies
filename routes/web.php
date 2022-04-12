@@ -63,6 +63,11 @@ Route::group(['prefix' => 'apps','as' => 'apps.', 'namespace' => 'Apps', 'middle
     Route::get('mpesa/list', 'MpesaTransactionController@list')->name('mpesa.list');
     Route::resource('mpesa', 'MpesaTransactionController');
 
+    Route::get('expenses/list', 'ExpenseController@list')->name('expenses.list');
+    Route::resource('expenses', 'ExpenseController');
+
+    Route::resource('composesms', 'ComposedSmsController');
+
 });
 
 // Application Management
