@@ -9,12 +9,11 @@
             <div class="card card-custom gutter-b">
                 <div class="card-header  bg-gray-700">
                     <div class="card-title">
-                        <h3 class="card-label text-white" id="tblCaption">Shop Employees List</h3>
+                        <h3 class="card-label text-white" id="tblCaption">Mpesa Tranactions</h3>
                         {{-- <span class="d-block text-muted pt-2 font-size-sm">sorting &amp; pagination remote datasource</span> --}}   
                     </div>
                     <div class="card-toolbar">
-                        <a href="#" id="AddNewRec" class="btn btn-warning btn-sm font-weight-bolder mr-1" title="Add New Template"> <span class="svg-icon svg-icon-md">
-                            <i class="flaticon2-plus text-white"></i></span>Add New Employee</a>
+                        
                     </div>
                 </div> {{--  End Class Header --}}
             <div class="card-body">
@@ -241,4 +240,4 @@
 </script>
 @endsection
 
-@include('pages.Apps.MyRecords.employee_edit');
+

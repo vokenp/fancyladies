@@ -283,7 +283,9 @@ return [
             'js/scripts.bundle.js',
             'js/jquery.validate.min.js',
             'js/popper.min.js',
-            'plugins/font-awesome/4.5.0/js/font-awesome.min.js'
+            'plugins/font-awesome/4.5.0/js/font-awesome.min.js',
+            'js/jquery.maskedinput.min.js',
+            'js/myscripts.js'
         ],
     ],
 

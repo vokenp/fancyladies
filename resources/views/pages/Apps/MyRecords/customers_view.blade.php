@@ -9,12 +9,12 @@
             <div class="card card-custom gutter-b">
                 <div class="card-header  bg-gray-700">
                     <div class="card-title">
-                        <h3 class="card-label text-white" id="tblCaption">Shop Employees List</h3>
+                        <h3 class="card-label text-white" id="tblCaption">Shop customers List</h3>
                         {{-- <span class="d-block text-muted pt-2 font-size-sm">sorting &amp; pagination remote datasource</span> --}}   
                     </div>
                     <div class="card-toolbar">
                         <a href="#" id="AddNewRec" class="btn btn-warning btn-sm font-weight-bolder mr-1" title="Add New Template"> <span class="svg-icon svg-icon-md">
-                            <i class="flaticon2-plus text-white"></i></span>Add New Employee</a>
+                            <i class="flaticon2-plus text-white"></i></span>Add New customer</a>
                     </div>
                 </div> {{--  End Class Header --}}
             <div class="card-body">
@@ -126,7 +126,7 @@
                 type: "POST",
                 dataType: 'json',
                 success: function (data) {
-                    $('#employee_edit').modal('hide');
+                    $('#customers_edit').modal('hide');
                     data['success'] ? swal_success() :  swal_error(data['error']);
                     $('#formData2').trigger("reset");
                     table.draw();
@@ -162,10 +162,10 @@
        
         $('#AddNewRec').click(function(){
             $('#row_id').val("");
-            $('#employee_edit').modal('show');
-            $('#modalLabel').html("Add New Employee");
-            $('#employee_idno').prop('readonly',false);
-            $('#btnSubmit').html('Save Employee');
+            $('#customers_edit').modal('show');
+            $('#modalLabel').html("Add New customer");
+            
+            $('#btnSubmit').html('Save customer');
             $('#formData2').trigger("reset");
            });
         
@@ -176,21 +176,19 @@
             
             $.ajax({
                 type: "GET",
-                url:  "/apps/employees/"+row_id+"/edit/",
+                url:  "/apps/customers/"+row_id+"/edit/",
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 success: function (data) {
-                    $('#employee_edit').modal('show');
+                    $('#customers_edit').modal('show');
                     
                     $('#row_id').val(data["id"]);
-                    $('#employee_name').val(data["employee_name"]);
-                    $('#employee_idno').val(data["employee_idno"]);
-                    $('#employee_idno').prop('readonly',true);
-                    $('#employee_phoneno').val(data["employee_phoneno"]);
-                    $('#employee_email').val(data["employee_email"]);
-                    $('#modalLabel').html("Update Employee");
-                    $('#btnSubmit').html('Update Employee');
+                    $('#customer_name').val(data["customer_name"]);
+                    $('#customer_phoneno').val(data["customer_phoneno"]);
+                    $('#customer_email').val(data["customer_email"]);
+                    $('#modalLabel').html("Update customer");
+                    $('#btnSubmit').html('Update customer');
 
                 },
                 error: function (data) {
@@ -241,4 +239,4 @@
 </script>
 @endsection
 
-@include('pages.Apps.MyRecords.employee_edit');
+@include('pages.Apps.MyRecords.customers_edit');

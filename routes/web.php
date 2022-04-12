@@ -57,6 +57,12 @@ Route::group(['prefix' => 'apps','as' => 'apps.', 'namespace' => 'Apps', 'middle
     Route::get('employees/list', 'EmployeeController@list')->name('employees.list');
     Route::resource('employees', 'EmployeeController');
 
+    Route::get('customers/list', 'CustomerController@list')->name('customers.list');
+    Route::resource('customers', 'CustomerController');
+
+    Route::get('mpesa/list', 'MpesaTransactionController@list')->name('mpesa.list');
+    Route::resource('mpesa', 'MpesaTransactionController');
+
 });
 
 // Application Management

@@ -33,8 +33,8 @@ return [
             'title' => 'Mpesa Transactions',
             'root' => true,
             'icon' => 'media/svg/icons/Design/Layers.svg', // or can be 'flaticon-home' or any flaticon-*
-            'page' => '/dashboard',
-            'new-tab' => false,
+            'page' => 'apps/mpesa',
+            'new-tab' => false
         ],
         [
             'section' => '****************',
@@ -48,7 +48,7 @@ return [
             'submenu' => [
                 [
                     'title' => 'Customers',
-                    'page' => 'features/bootstrap/typography',
+                    'page' => 'apps/customers',
                     'new-tab' => false,
                 ],
                 [

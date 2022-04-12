@@ -1,5 +1,5 @@
 <!-- Modal-->
-<div class="modal fade" id="employee_edit" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+<div class="modal fade" id="customers_edit" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -15,16 +15,8 @@
                
                 <div class="row">
                     <div class="form-group col-sm-12">
-                        <label>Employee ID:</label>
-                        <input type="text" name="employee_idno" id="employee_idno"  class="form-control form-control-solid" placeholder="Enter Employee ID" required/>
-                    </div>
-                   
-                </div>
-
-                <div class="row">
-                    <div class="form-group col-sm-12">
-                        <label>Employee Name:</label>
-                        <input type="text" name="employee_name" id="employee_name"  class="form-control form-control-solid" placeholder="Enter Employee Name" required/>
+                        <label>Customer Name:</label>
+                        <input type="text" name="customer_name" id="customer_name"  class="form-control form-control-solid" placeholder="Enter Customer Name" required/>
                     </div>
                    
                 </div>
@@ -32,16 +24,16 @@
 
                 <div class="row">
                     <div class="form-group col-sm-12">
-                        <label>Employee Phone:</label>
-                        <input type="text" name="employee_phoneno" id="employee_phoneno"  class="form-control form-control-solid mask-phoneNo" placeholder="Enter Employee Phone No" required/>
+                        <label>Customer Phone:</label>
+                        <input type="text" name="customer_phoneno" id="customer_phoneno"  class="form-control form-control-solid mask-phoneNo" placeholder="Enter Customer Phone No" required/>
                     </div>
                    
                 </div>
 
                 <div class="row">
                     <div class="form-group col-sm-12">
-                        <label>Employee Email:</label>
-                        <input type="email" name="employee_email" id="employee_email"  class="form-control form-control-solid" placeholder="Enter Employee Email" required/>
+                        <label>Customer Email:</label>
+                        <input type="email" name="customer_email" id="customer_email"  class="form-control form-control-solid" placeholder="Enter Customer Email" />
                     </div>
                    
                 </div>
