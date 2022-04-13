@@ -52,12 +52,6 @@
         @endforeach
 
         {{-- Includable JS --}}
-        @yield('scripts')
-
-     
-        {{-- Vue --}}
-        <script src="/js/website.js" type="text/javascript"></script>
-
-        
+        @yield('scripts')        
     </body>
 </html>

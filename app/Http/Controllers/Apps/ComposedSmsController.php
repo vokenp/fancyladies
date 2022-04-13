@@ -86,20 +86,36 @@ class ComposedSmsController extends Controller
      */
     public function store(Request $request)
     {
-        $rst = ComposedSms::where('id', $request->row_id)->first();
-        if($rst !== null)
-        {
-            $request->request->add(['updated_by', Auth::id()]);
-            $exec = $rst->update(array_merge($request->all(), ['updated_by' => Auth::id()]));
+       $sendCategory = $request->send_category;
+       if($sendCategory == "optFreeNums")
+       {
+        $FreeNumsTag = $request->FreeNumsTag;
+        $phonelist = explode(',',$FreeNumsTag);
+        $arg = array_filter($phonelist);
+   
+        foreach ($phonelist as $key => $val) {
+            $msg[] = array("phone" => formatPhoneNumber($val),"message"=>$request->message_body);
         }
-        else{
     
-            $request->request->add(['created_by', Auth::id()]);
-            ComposedSms::create(array_merge($request->all(), ['created_by' => Auth::id()]));
-        }
-        //SmsTemplate::updateOrCreate(['id' => $request->row_id,'created_by' => Auth::id()],$request->all());
+       $response = sendBatchSMS($msg);
+          
+       }
 
-        return response()->json(['success'=>'Record saved successfully!']);
+        return $request->all();
+        // $rst = ComposedSms::where('id', $request->row_id)->first();
+        // if($rst !== null)
+        // {
+        //     $request->request->add(['updated_by', Auth::id()]);
+        //     $exec = $rst->update(array_merge($request->all(), ['updated_by' => Auth::id()]));
+        // }
+        // else{
+    
+        //     $request->request->add(['created_by', Auth::id()]);
+        //     ComposedSms::create(array_merge($request->all(), ['created_by' => Auth::id()]));
+        // }
+        // //SmsTemplate::updateOrCreate(['id' => $request->row_id,'created_by' => Auth::id()],$request->all());
+
+        // return response()->json(['success'=>'Record saved successfully!']);
     }
 
     /**

@@ -26,7 +26,7 @@ return [
             'title' => 'Record Sales',
             'root' => true,
             'icon' => 'media/svg/icons/Design/Layers.svg', // or can be 'flaticon-home' or any flaticon-*
-            'page' => '/dashboard',
+            'page' => 'apps/sales',
             'new-tab' => false,
         ],
         [

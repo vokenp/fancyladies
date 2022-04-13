@@ -66,6 +66,9 @@ Route::group(['prefix' => 'apps','as' => 'apps.', 'namespace' => 'Apps', 'middle
     Route::get('expenses/list', 'ExpenseController@list')->name('expenses.list');
     Route::resource('expenses', 'ExpenseController');
 
+    Route::get('sales/list', 'SalesOrderController@list')->name('sales.list');
+    Route::resource('sales', 'SalesOrderController');
+
     Route::resource('composesms', 'ComposedSmsController');
 
 });
