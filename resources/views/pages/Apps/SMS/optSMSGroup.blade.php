@@ -1,13 +1,13 @@
 <div class="row">
-    <div class="form-group">
-        <div class="col-md-5"> <label>Choose SMS Groups Below:</label></div>
+    <div class="form-group mr-5">
+        <div class="col-md-12"><label>Choose a SMS Group Below:</label></div>
         <div class="col-md-12">
-            <select name="send_groups" id="send_groups" class="form-control chzn-select" multiple style="width:100%;"  >
-               
-                @foreach(getListItems('Country') as $list)
-                <option value="{{ $list->item_code }}" >{{ $list->item_description }}</option>
-                @endforeach
+        <select name="send_groups[]" id="send_groups" class="chzn-select" multiple="multiple" style="width: 40em">          
+            @foreach($smsGroups as $list)
+            <option value="{{ $list->id }}" >{{ $list->group_name }}</option>
+            @endforeach
             </select>
         </div>
     </div>
+  
 </div>

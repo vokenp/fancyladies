@@ -70,6 +70,22 @@ class SmsGroupController extends Controller
         return view('pages.listview',$data);
     }
 
+    public function chosenlist(Request $request)
+    {
+        $qry = null;
+        if(isset($request->qry))
+        {
+            $qry = $request->qry ;
+        }
+        $q_rst = SmsGroup::select('id','group_name')->where('group_name','like', '%'.$qry.'%')->orderByDesc('created_at')->take(15)->get();
+         $rst = array(); 
+        foreach($q_rst as $list)
+          {
+            $rst[] = array("id" => $list->id,"name" => $list->group_name);
+          }
+        return $qry;
+    }
+
 
     public function list(Request $request)
     {

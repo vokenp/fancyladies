@@ -69,6 +69,10 @@ class CreateComposedSmsTable extends Migration
                 $table->string('message_type')->nullable();
             }
 
+            if (!Schema::hasColumn($tableName,'send_category')) {
+                $table->string('send_category')->nullable();
+            }
+
             if (!Schema::hasColumn($tableName,'scheduled_date')) {
                 $table->dateTime('scheduled_date')->nullable();
             }

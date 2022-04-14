@@ -16,6 +16,7 @@ class ComposedSms extends Model
         'send_urgency',
         'send_status',
         'distribution_list',
+        'send_category',
         'message_type',
         'scheduled_date',
         'sms_bal_at'

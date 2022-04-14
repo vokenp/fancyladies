@@ -49,6 +49,7 @@ Route::group(['prefix' => 'apps','as' => 'apps.', 'namespace' => 'Apps', 'middle
     Route::resource('smspendingbox', 'PendingSMSBoxController');
 
     Route::get('smsgroup/list', 'SmsGroupController@list')->name('smsgroup.list');
+    Route::get('smsgroup/chosenlist', 'SmsGroupController@chosenlist')->name('smsgroup.chosenlist');
     Route::resource('smsgroup', 'SmsGroupController');
 
     Route::get('shopservices/list', 'ShopServiceController@list')->name('shopservices.list');

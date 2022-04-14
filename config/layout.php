@@ -272,19 +272,21 @@ return [
             'plugins/custom/prismjs/prismjs.bundle.css',
             'css/style.bundle.css',
             'plugins/custom/datatables/datatables.bundle.css',
+            'css/select2.min.css',
             'css/app.css',
             'plugins/flaticon/flaticon.css',
             'plugins/flaticon2/flaticon.css',
             'plugins/font-awesome/4.5.0/css/font-awesome.min.css',
             'css/bootstrap-datetimepicker.min.css',
             'css/chosen.css',
-            'css/jquery.tagsinput.min.css',
-            'css/select2.min.css',
+            'css/jquery.tagsinput.min.css'
+            
         ],
         'js' => [
             'plugins/global/plugins.bundle.js',
             'plugins/custom/prismjs/prismjs.bundle.js',
             'js/scripts.bundle.js',
+            'js/jquery-ui.js',
             'js/app.js',
             'js/jquery.validate.min.js',
             'js/popper.min.js',

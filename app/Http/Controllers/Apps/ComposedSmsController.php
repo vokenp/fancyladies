@@ -48,8 +48,14 @@ class ComposedSmsController extends Controller
     {
         $smsBalance = getSmsBalance();
         $templates = DB::table('sms_templates')->select('template_code','template_name','template_text')->get();
+        $SMSGroups = DB::table('sms_groups')->select('id','group_name')->get();
+        $Shopemployees = DB::table('employees')->select('id','employee_name')->get();
+        $ShopCustomers = DB::table('customers')->select('id','customer_name','customer_phoneno')->get();
         $data = [
             'smsBalance'       => $smsBalance,
+            'smsGroups'       => $SMSGroups,
+            'Shopemployees'   =>  $Shopemployees,
+            'ShopCustomers'   =>  $ShopCustomers,
             'smsTemps'       => $templates,
             'page_title'       => $this->page_title,
             'page_description' => $this->page_description,
@@ -87,35 +93,82 @@ class ComposedSmsController extends Controller
     public function store(Request $request)
     {
        $sendCategory = $request->send_category;
+       $distrubulist  = "Test";
+
        if($sendCategory == "optFreeNums")
        {
         $FreeNumsTag = $request->FreeNumsTag;
         $phonelist = explode(',',$FreeNumsTag);
         $arg = array_filter($phonelist);
-   
-        foreach ($phonelist as $key => $val) {
-            $msg[] = array("phone" => formatPhoneNumber($val),"message"=>$request->message_body);
+
+        if(empty($arg))
+        {
+            return response()->json(['error'=>'Input atleast one PhoneNo!']);
         }
-    
-       $response = sendBatchSMS($msg);
-          
+        $distrubulist = json_encode($phonelist);
        }
 
-        return $request->all();
-        // $rst = ComposedSms::where('id', $request->row_id)->first();
-        // if($rst !== null)
-        // {
-        //     $request->request->add(['updated_by', Auth::id()]);
-        //     $exec = $rst->update(array_merge($request->all(), ['updated_by' => Auth::id()]));
-        // }
-        // else{
-    
-        //     $request->request->add(['created_by', Auth::id()]);
-        //     ComposedSms::create(array_merge($request->all(), ['created_by' => Auth::id()]));
-        // }
-        // //SmsTemplate::updateOrCreate(['id' => $request->row_id,'created_by' => Auth::id()],$request->all());
+       if($sendCategory == "optSMSGroup")
+       {
+            $groupTags = $request->send_groups;
+            if(!is_array($groupTags))
+            {
+                return response()->json(['error'=>'Please select atleast One SMS Group!']);
+            }
+           $distrubulist = json_encode($groupTags);
+       }
 
-        // return response()->json(['success'=>'Record saved successfully!']);
+       if($sendCategory == "optCustomers")
+       {
+                $CustSentTo = $request->CustSentTo;
+                if($CustSentTo == "All")
+                {
+                    $CustTags = array("All");
+                }
+             else
+           {
+                 $CustTags = $request->ShopCustomers;
+                if(!is_array($CustTags))
+                    {
+                      return response()->json(['error'=>'Please select atleast One Customer!']);
+                    }
+           }
+          $distrubulist = json_encode($CustTags); 
+       }
+
+       if($sendCategory == "optEmployees")
+       {
+        $EmpSentTo = $request->EmpSentTo;
+        if($EmpSentTo == "All")
+        {
+            $EmpTags = array("All");
+        }
+             else
+        {
+         $EmpTags = $request->Shopemployees;
+        if(!is_array($EmpTags))
+            {
+              return response()->json(['error'=>'Please select atleast One Employee!']);
+            }
+         }
+         $distrubulist = json_encode($EmpTags); 
+       }
+
+        $rst = ComposedSms::where('id', $request->row_id)->first();
+        if($rst !== null)
+        {
+            $request->request->add(['updated_by', Auth::id()]);
+            $exec = $rst->update(array_merge($request->all(), ['updated_by' => Auth::id()]));
+        }
+        else{
+            $request->request->add(['send_category' => str_replace('opt','',$sendCategory)]);
+            $request->request->add(['distribution_list' => $distrubulist]);
+            $request->request->add(['created_by', Auth::id()]);
+            ComposedSms::create(array_merge($request->all(), ['created_by' => Auth::id()]));
+        }
+        //SmsTemplate::updateOrCreate(['id' => $request->row_id,'created_by' => Auth::id()],$request->all());
+
+        return response()->json(['success'=>'Record saved successfully!']);
     }
 
     /**
