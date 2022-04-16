@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\ComposedSms;
 use Event;
 
-class SendComposedSMS
+class SendComposedSMS implements ShouldQueue
 {
     /**
      * Create the event listener.
