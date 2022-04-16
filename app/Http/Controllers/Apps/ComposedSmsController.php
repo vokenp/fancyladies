@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use Event;
+use App\Events\SendSMS;
 class ComposedSmsController extends Controller
 {
     /**
@@ -164,7 +166,9 @@ class ComposedSmsController extends Controller
             $request->request->add(['send_category' => str_replace('opt','',$sendCategory)]);
             $request->request->add(['distribution_list' => $distrubulist]);
             $request->request->add(['created_by', Auth::id()]);
-            ComposedSms::create(array_merge($request->all(), ['created_by' => Auth::id()]));
+            $rec = ComposedSms::create(array_merge($request->all(), ['created_by' => Auth::id()]));
+            $lastID = $rec->id;
+            Event::dispatch(new SendSMS($lastID));
         }
         //SmsTemplate::updateOrCreate(['id' => $request->row_id,'created_by' => Auth::id()],$request->all());
 

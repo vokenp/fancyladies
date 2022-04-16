@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use BongaTech\Api\BongaTech;
 use BongaTech\Api\Models\Sms;
+use Event;
+use App\Events\SendSMS;
 
 class SendsmsController extends Controller
 {
@@ -29,14 +31,10 @@ class SendsmsController extends Controller
         // $response = sendSMS($msg);
 
         //$response = getSmsBalance();
-      for ($i=0; $i < 1; $i++) { 
-          $rand = rand();
-        $msg[] = array("phone" => formatPhoneNumber("0101283064"),"message"=>"$i THis is Good Stuff $rand");
-      }
-    
-   
-       $response = sendBatchSMS($msg);
-            return $response;
+
+        Event::dispatch(new SendSMS(41));
+        dd("Kenya");
+       
     }
 
     /**
