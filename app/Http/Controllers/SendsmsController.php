@@ -32,7 +32,7 @@ class SendsmsController extends Controller
 
         //$response = getSmsBalance();
 
-        Event::dispatch(new SendSMS(41));
+        Event::dispatch(new SendSMS(52));
         dd("Kenya");
        
     }

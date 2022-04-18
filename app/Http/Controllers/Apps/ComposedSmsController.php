@@ -125,7 +125,7 @@ class ComposedSmsController extends Controller
                 $CustSentTo = $request->CustSentTo;
                 if($CustSentTo == "All")
                 {
-                    $CustTags = array("All");
+                    $CustTags = 'All';
                 }
              else
            {
@@ -134,8 +134,9 @@ class ComposedSmsController extends Controller
                     {
                       return response()->json(['error'=>'Please select atleast One Customer!']);
                     }
+                $CustTags = json_encode($CustTags);
            }
-          $distrubulist = json_encode($CustTags); 
+          $distrubulist = $CustTags;
        }
 
        if($sendCategory == "optEmployees")
@@ -143,7 +144,7 @@ class ComposedSmsController extends Controller
         $EmpSentTo = $request->EmpSentTo;
         if($EmpSentTo == "All")
         {
-            $EmpTags = array("All");
+            $EmpTags = "All";
         }
              else
         {
@@ -152,8 +153,9 @@ class ComposedSmsController extends Controller
             {
               return response()->json(['error'=>'Please select atleast One Employee!']);
             }
+            $EmpTags = json_encode($EmpTags);
          }
-         $distrubulist = json_encode($EmpTags); 
+         $distrubulist =  $EmpTags;
        }
 
         $rst = ComposedSms::where('id', $request->row_id)->first();

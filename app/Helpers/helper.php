@@ -284,17 +284,7 @@ function getModels(): Collection
 }
 }
 
-   if(!function_exists('getTblCols'))
-   {
-     function getTblCols($table)
-     {
-      $table = strtolower($table); 
-      $columns = DB::getSchemaBuilder()->getColumnListing($table);
-      $key = array_search('id', $columns,true); 
-      unset($columns[$key]);
-      return $columns;
-     }
-   }
+   
   
 
 

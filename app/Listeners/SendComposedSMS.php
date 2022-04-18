@@ -32,53 +32,58 @@ class SendComposedSMS implements ShouldQueue
         }
 
         $response = sendBatchSMS($msg);
+        $this->doUpdateTable($smsInfo["id"]);
+    }
 
+    public function doCustomer($smsInfo)
+    {
+       // $distributionList = $smsInfo["distribution_list"];
+        //$messageBody = $smsInfo["message_body"];
+
+        // if ($distributionList == 'All') {
+        //   $AllCustomers = DB::table('customers')->select('id','customer_phoneno')->get();
+        //   $custlist = array();
+        //     foreach($AllCustomers as $list)
+        //     {
+        //       $phoneNo = str_replace('-','',$list["customer_phoneno"]);
+        //       $custlist[] =  array("phone" => formatPhoneNumber($phoneNo),"message"=> $messageBody,"ExtraName" => "Customers","ExtraID" => $list["id"]);
+        //     }
+        //     $distChuck = array_chunk($custlist, 99);
+        //     foreach($distChuck  as $distList){
+        //       $response = sendBatchSMS($distList);
+        //     } 
+        // }
+
+        $this->doUpdateTable($smsInfo["id"]);
+    }
+
+    public function doCustomerList($smsInfo)
+    {
+        $distributionList = $smsInfo["distribution_list"];
+        $messageBody = $smsInfo["message_body"];
+
+        for ($i=0; $i < 2; $i++) { 
+            $input_array[] = array("phoneNo" => "0712364528","Message" => $messageBody.rand(),"ExtraName" => "Customers","ExtraID" => rand());
+           }
+           $response = sendBatchSMS($input_array);
+          
+        
+      $this->doUpdateTable($smsInfo["id"]);
+    }
+
+    public function doEmployeeList($smsInfo)
+    {
+       $this->doUpdateTable($smsInfo["id"]);
+    }
+  
+
+
+    public function doUpdateTable($smsID)
+    {
       $updateItem = array();
       $updateItem["send_status"] = 'Sent';
       $updateItem["updated_at"] = now();
-      DB::table('composed_sms')->where('id', $smsInfo["id"])->update($updateItem);
-    }
-
-
-    public function doInterimMembers($smsInfo)
-    {
-
-
-      $updateItem = array();
-      $updateItem["send_status"] = 'Sent';
-      $updateItem["updated_at"] = now();
-      DB::table('composed_sms')->where('id', $smsInfo["id"])->update($updateItem);
-    }
-
-    public function doMembers($smsInfo)
-    {
-
-
-      $updateItem = array();
-      $updateItem["send_status"] = 'Sent';
-      $updateItem["updated_at"] = now();
-      DB::table('composed_sms')->where('id', $smsInfo["id"])->update($updateItem);
-    }
-
-    public function doChurchGroups($smsInfo)
-    {
-
-
-      $updateItem = array();
-      $updateItem["send_status"] = 'Sent';
-      $updateItem["updated_at"] = now();
-      DB::table('composed_sms')->where('id', $smsInfo["id"])->update($updateItem);
-    }
-
-
-    public function doTempGroups($smsInfo)
-    {
-
-
-      $updateItem = array();
-      $updateItem["send_status"] = 'Sorted';
-      $updateItem["updated_at"] = now();
-      DB::table('composed_sms')->where('id', $smsInfo["id"])->update($updateItem);
+      DB::table('composed_sms')->where('id', $smsID)->update($updateItem);
     }
 
     public function handle(SendSMS $event)
@@ -91,18 +96,10 @@ class SendComposedSMS implements ShouldQueue
              case 'FreeNums':
                  $this->doFreeNums($smsInfo);
                  break;
-             case 'InterimMembers':
-                 $this->doInterimMembers($smsInfo);
-                 break;
-             case 'Members':
-                 $this->doMembers($smsInfo);
-                 break;
-             case 'ChurchGroups':
-                  $this->doChurchGroups($smsInfo);
-                  break;
-             case 'TempGroups':
-                  $this->doTempGroups($smsInfo);
-                  break;
+              case 'Customers':
+                $this->doCustomerList($smsInfo);
+             case 'Employees':
+                $this->doEmployeeList($smsInfo);
              default:
                  
                  break;

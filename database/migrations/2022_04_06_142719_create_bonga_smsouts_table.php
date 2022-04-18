@@ -48,13 +48,6 @@ class CreateBongaSmsoutsTable extends Migration
                 $table->foreignId('updated_by')->nullable()->constrained('users')->nullOnDelete();
             }
 
-            if (!Schema::hasColumn($tableName,'user_id')) {
-                $table->foreignId('user_id')->nullable()->constrained('users')->nullOnDelete();
-            }
-
-            if (!Schema::hasColumn($tableName,'member_id')) {
-                $table->foreignId('member_id')->nullable()->constrained('members')->nullOnDelete();
-            }
 
             if (!Schema::hasColumn($tableName,'send_status')) {
                 $table->string('send_status')->default('pending');
@@ -118,6 +111,14 @@ class CreateBongaSmsoutsTable extends Migration
 
             if (!Schema::hasColumn($tableName,'deliveryTime')) {
                 $table->timestamp('deliveryTime')->nullable();
+            } 
+
+            if (!Schema::hasColumn($tableName,'receiver_category')) {
+                $table->string('receiver_category')->nullable()->default('FreeNum');
+            } 
+
+            if (!Schema::hasColumn($tableName,'receiver_id')) {
+                $table->integer('receiver_id')->nullable();
             } 
     
         });

@@ -55,6 +55,7 @@ class SmsGroupController extends Controller
             'editAction'    => $this->editlink,
             'tblContent'    =>  $this->tblContentLink,
             'listLink'    =>  $this->listlink,
+            
             'content'    => 'pages.Apps.SMS.smsGroup_view',
             
         ];
@@ -104,6 +105,8 @@ class SmsGroupController extends Controller
                         $btn .= '<a class="dropdown-item editRecord" href="#"  data-id="'.$row->id.'">';
                         $btn .= '<span class="navi-icon"><i class="flaticon2-pen text-success"> </i><span class="navi-text"> Edit Record</span></a>';
 
+                        $btn .= '<a class="dropdown-item" href="'.route($this->viewlink,$row->id).'">';
+                        $btn .= '<span class="navi-icon"><i class="fa fa-list text-success"> </i> <span class="navi-text">Manage List</span></a>';
                         $btn .= '<a class="dropdown-item deleteRecord text-danger" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Delete" href="#"> <span class="navi-icon"><i class="flaticon2-trash"></i><span class="navi-text"> Delete</span></a>';
                         $btn .= '</div></div> ';
                         $popInfo = 'CreatedOn: '.date_format($row->created_at,'D jS M Y g:i A');
@@ -159,7 +162,23 @@ class SmsGroupController extends Controller
      */
     public function show($id)
     {
-        //
+        $rst = SmsGroup::findOrfail($id);
+        $data = [
+            'rst'       => $rst,
+            'page_title'       => $this->page_title,
+            'page_description' => $this->page_description,
+            'btncreate'    => $this->btnAddNew,
+            'delAction'    => $this->btnDelAction,
+            'storeAction'    => $this->storelink,
+            'editAction'    => $this->editlink,
+            'tblContent'    =>  $this->tblContentLink,
+            'listLink'    =>  $this->listlink,
+            'content'    => 'pages.Apps.SMS.SMSGroup_list'
+            // 'hasModal'    => 'pages.SysDev.menucategory_edit_modal',
+            // 'modalName'  => 'menucat_edit_modal',
+        ];
+
+        return view('pages.listview',$data);
     }
 
     /**
