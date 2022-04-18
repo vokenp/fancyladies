@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Events\LoginHistory;
 use App\Events\SendSMS;
+use App\Listeners\LoginHistoryLog;
 use App\Listeners\SendComposedSMS;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -22,6 +24,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         SendSMS::class => [
             SendComposedSMS::class,
+        ],
+        LoginHistory::class => [
+            LoginHistoryLog::class,
         ]
     ];
 
