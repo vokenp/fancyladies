@@ -29,6 +29,7 @@ class BongaSmsout extends Model
         'deliveryStatus',
         'deliveryTime',
         'receiver_category',
-        'receiver_id'
+        'receiver_id',
+        'composed_sms_id'
     ];
 }

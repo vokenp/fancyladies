@@ -48,6 +48,9 @@ class CreateBongaSmsoutsTable extends Migration
                 $table->foreignId('updated_by')->nullable()->constrained('users')->nullOnDelete();
             }
 
+            if (!Schema::hasColumn($tableName,'composed_sms_id')) {
+                $table->foreignId('composed_sms_id')->nullable()->constrained('composed_sms')->cascadeOnDelete();
+            }
 
             if (!Schema::hasColumn($tableName,'send_status')) {
                 $table->string('send_status')->default('pending');
@@ -70,7 +73,7 @@ class CreateBongaSmsoutsTable extends Migration
             }
 
             if (!Schema::hasColumn($tableName,'correlator')) {
-                $table->string('correlator')->unique();
+                $table->string('correlator')->nullable();
             }
 
             if (!Schema::hasColumn($tableName,'uniqueId')) {

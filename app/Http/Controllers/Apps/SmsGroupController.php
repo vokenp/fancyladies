@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Apps;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\SmsGroup;
+use App\Models\SmsGrouplist;
 use DataTables;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -27,6 +28,7 @@ class SmsGroupController extends Controller
     public $storelink;
     public $editlink;
     public $listlink;
+    public $grouplistlink;
 
     public function __construct()
     {
@@ -42,6 +44,9 @@ class SmsGroupController extends Controller
         $this->editlink = 'apps.'.$this->menuLinkName.'.edit';
         $this->listlink = 'apps.'.$this->menuLinkName.'.list';
         $this->viewlink = 'apps.'.$this->menuLinkName.'.show';
+        $this->grouplistlink = 'apps.'.$this->menuLinkName.'.grouplist';
+        $this->groupDelAction = 'apps.'.$this->menuLinkName.'.groupdelete';
+        $this->groupStore  = 'apps.'.$this->menuLinkName.'.groupStore';
     }
 
     public function index()
@@ -120,6 +125,39 @@ class SmsGroupController extends Controller
         }
     }
 
+    public function grouplist(Request $request)
+    {
+        if ($request->ajax()) {
+            $groupID = $request->get('group_id');
+            $q_user = SmsGrouplist::select('*')->where('group_id','=', $groupID)->orderByDesc('created_at');
+            return Datatables::of($q_user)
+                    ->addIndexColumn()
+                    ->addColumn('action', function($row){
+                    
+                        $btn = "";
+                        $btn .= '<div class="dropdown dropdown-inline mr-4">';
+                        $btn .= '<button type="button" class="btn btn-info btn-icon btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
+                        $btn .= '<i class="flaticon2-gear text-white"></i></button>';
+                        $btn .= '<div class="dropdown-menu">';
+
+                        $btn .= '<a class="dropdown-item editRecord" href="#"  data-id="'.$row->id.'">';
+                        $btn .= '<span class="navi-icon"><i class="flaticon2-pen text-success"> </i><span class="navi-text"> Edit Record</span></a>';
+                     
+                        $btn .= '<a class="dropdown-item deleteRecord text-danger" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Delete" href="#"> <span class="navi-icon"><i class="flaticon2-trash"></i><span class="navi-text"> Delete</span></a>';
+                        $btn .= '</div></div> ';
+                        $popInfo = 'CreatedOn: '.date_format($row->created_at,'D jS M Y g:i A');
+                        $btn .= '<a href="#" class="btn btn-success btn-icon btn-sm " data-toggle="tooltip" data-placement="top" title="'.$popInfo.'" ><i class="fa fa-info "></a>';
+                    
+                         return $btn;
+                    })
+                    ->rawColumns(['action'])
+                    ->make(true);
+        }
+    }
+
+
+
+
     /**
      * Show the form for creating a new resource.
      *
@@ -154,6 +192,25 @@ class SmsGroupController extends Controller
         return response()->json(['success'=>'Record saved successfully!']);
     }
 
+
+    public function groupStore(Request $request)
+    {
+        $rst = SmsGrouplist::where('id', $request->row_id)->first();
+        if($rst !== null)
+        {
+            $request->request->add(['updated_by', Auth::id()]);
+            $exec = $rst->update(array_merge($request->all(), ['updated_by' => Auth::id()]));
+        }
+        else{
+    
+            $request->request->add(['created_by', Auth::id()]);
+            SmsGrouplist::create(array_merge($request->all(), ['created_by' => Auth::id()]));
+        }
+       
+
+        return response()->json(['success'=>'Record saved successfully!']);
+    }
+
     /**
      * Display the specified resource.
      *
@@ -163,6 +220,7 @@ class SmsGroupController extends Controller
     public function show($id)
     {
         $rst = SmsGroup::findOrfail($id);
+
         $data = [
             'rst'       => $rst,
             'page_title'       => $this->page_title,
@@ -173,10 +231,22 @@ class SmsGroupController extends Controller
             'editAction'    => $this->editlink,
             'tblContent'    =>  $this->tblContentLink,
             'listLink'    =>  $this->listlink,
+            'grouplistlink' => $this->grouplistlink,
+            'groupDelAction' => $this->groupDelAction,
+            'groupStore' => $this->groupStore,
             'content'    => 'pages.Apps.SMS.SMSGroup_list'
             // 'hasModal'    => 'pages.SysDev.menucategory_edit_modal',
             // 'modalName'  => 'menucat_edit_modal',
         ];
+
+        $columns = [];
+        $columns[] = array('data' => 'DT_RowIndex', 'name' => 'DT_RowIndex','title' => '#' ,'searchable' =>false,'orderable' =>false);
+        $columns[] = array('data' => 'groupmember_name', 'name' => 'groupmember_name', 'title' =>'Full Name');
+        $columns[] = array('data' => 'groupmember_phoneno', 'name' => 'groupmember_phoneno', 'title' =>'PhoneNo');
+        $columns[] = array('data' => 'action', 'name' => 'action','title' => 'Actions' ,'searchable' =>false,'orderable' =>false);
+        
+        $data['cols'] = json_encode($columns);
+
 
         return view('pages.listview',$data);
     }
@@ -191,6 +261,12 @@ class SmsGroupController extends Controller
     {
         $rst = SmsGroup::findOrfail($id);
         return $rst;
+    }
+
+    public function groupedit($id)
+    {
+        $rst2 = SmsGrouplist::findOrfail($id);
+        return $rst2;
     }
 
     /**
@@ -211,6 +287,13 @@ class SmsGroupController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+    public function groupdelete($id)
+    {
+        SmsGrouplist::find($id)->delete();
+        return response()->json(['success'=>'Record deleted!']);
+    }
+
     public function destroy($id)
     {
         SmsGroup::find($id)->delete();

@@ -27,47 +27,40 @@ class SendComposedSMS implements ShouldQueue
         
         $messageBody = $smsInfo["message_body"];
         $msg = array();
+        
         foreach ($distributionList as $key => $val) {
-            $msg[] = array("phone" => formatPhoneNumber($val),"message"=> $messageBody);
+            $msg[] = array("phone" => formatPhoneNumber($val),"message"=> $messageBody,"composedSMSID" => $smsInfo["id"]);
         }
 
         $response = sendBatchSMS($msg);
         $this->doUpdateTable($smsInfo["id"]);
     }
 
-    public function doCustomer($smsInfo)
-    {
-       // $distributionList = $smsInfo["distribution_list"];
-        //$messageBody = $smsInfo["message_body"];
+    // public function doCustomer($smsInfo)
+    // {
+    //    // $distributionList = $smsInfo["distribution_list"];
+    //     //$messageBody = $smsInfo["message_body"];
 
-        // if ($distributionList == 'All') {
-        //   $AllCustomers = DB::table('customers')->select('id','customer_phoneno')->get();
-        //   $custlist = array();
-        //     foreach($AllCustomers as $list)
-        //     {
-        //       $phoneNo = str_replace('-','',$list["customer_phoneno"]);
-        //       $custlist[] =  array("phone" => formatPhoneNumber($phoneNo),"message"=> $messageBody,"ExtraName" => "Customers","ExtraID" => $list["id"]);
-        //     }
-        //     $distChuck = array_chunk($custlist, 99);
-        //     foreach($distChuck  as $distList){
-        //       $response = sendBatchSMS($distList);
-        //     } 
-        // }
+    //     // if ($distributionList == 'All') {
+    //     //   $AllCustomers = DB::table('customers')->select('id','customer_phoneno')->get();
+    //     //   $custlist = array();
+    //     //     foreach($AllCustomers as $list)
+    //     //     {
+    //     //       $phoneNo = str_replace('-','',$list["customer_phoneno"]);
+    //     //       $custlist[] =  array("phone" => formatPhoneNumber($phoneNo),"message"=> $messageBody,"ExtraName" => "Customers","ExtraID" => $list["id"]);
+    //     //     }
+    //     //     $distChuck = array_chunk($custlist, 99);
+    //     //     foreach($distChuck  as $distList){
+    //     //       $response = sendBatchSMS($distList);
+    //     //     } 
+    //     // }
 
-        $this->doUpdateTable($smsInfo["id"]);
-    }
+    //     $this->doUpdateTable($smsInfo["id"]);
+    // }
 
     public function doCustomerList($smsInfo)
     {
-        $distributionList = $smsInfo["distribution_list"];
-        $messageBody = $smsInfo["message_body"];
-
-        for ($i=0; $i < 2; $i++) { 
-            $input_array[] = array("phoneNo" => "0712364528","Message" => $messageBody.rand(),"ExtraName" => "Customers","ExtraID" => rand());
-           }
-           $response = sendBatchSMS($input_array);
-          
-        
+           
       $this->doUpdateTable($smsInfo["id"]);
     }
 

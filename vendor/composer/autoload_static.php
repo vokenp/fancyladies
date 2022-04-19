@@ -598,6 +598,7 @@ class ComposerStaticInit21faffdc826bdc0322dc86de58ba8d94
         'App\\Models\\SalesOrder' => __DIR__ . '/../..' . '/app/Models/SalesOrder.php',
         'App\\Models\\ShopService' => __DIR__ . '/../..' . '/app/Models/ShopService.php',
         'App\\Models\\SmsGroup' => __DIR__ . '/../..' . '/app/Models/SmsGroup.php',
+        'App\\Models\\SmsGrouplist' => __DIR__ . '/../..' . '/app/Models/SmsGrouplist.php',
         'App\\Models\\SmsTemplate' => __DIR__ . '/../..' . '/app/Models/SmsTemplate.php',
         'App\\Models\\Staff' => __DIR__ . '/../..' . '/app/Models/Staff.php',
         'App\\Models\\Submenu' => __DIR__ . '/../..' . '/app/Models/Submenu.php',

@@ -1,4 +1,6 @@
 <?php
+
+use App\Models\BongaSmsout;
 use Illuminate\Container\Container;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
@@ -73,23 +75,28 @@ if(!function_exists('sendBatchSMS'))
         $smslist = array();
         foreach ($Msgs as $key => $msg) {
             $sendMsg = array();
-            $sendMsg['correlator'] = getNextId('bonga_smsouts');
+            $nextID = getNextId('bonga_smsouts');
+            $sendMsg['correlator'] = $nextID;
             $sendMsg['short_code'] = config('app.BShortCode');
             $sendMsg["phone"] = $msg["phone"];
             $sendMsg["message"] = $msg["message"];
             $createdListID[] = $sendMsg['correlator'];
+            $composed_sms_id = isset($msg["composedSMSID"]) ? $msg["composedSMSID"] : "";
+
             $items =  [
-                [
                   'short_code' => $sendMsg["short_code"],
                   'phone' => $sendMsg["phone"],
                   'message' => $sendMsg["message"],
                   'sms_length' => strlen($sendMsg["message"]),
-                  'correlator' => $sendMsg["correlator"],
-                  'created_by' =>Auth::id(),
+                  'correlator' => $nextID,
+                  'composed_sms_id' => $composed_sms_id,
+                  'created_by' => Auth::id(),
                   'created_at' => now()
-                ]
               ];
-             DB::table('bonga_smsouts')->insert($items);
+
+            DB::table('bonga_smsouts')->insert($items);
+           
+          
             $smslist[] = new Sms($sendMsg['short_code'], $sendMsg['phone'],  $sendMsg['message'],  $sendMsg['correlator']);
         }
 
@@ -104,7 +111,7 @@ if(!function_exists('sendBatchSMS'))
                       'response_message' =>  $response["message"],
                       'updated_at' => now()  
                   ];
-                  DB::table('bonga_smsouts')->where('correlator', $response["data"]['correlator'])->update($responseitems);
+                  DB::table('bonga_smsouts')->where('id', $response["data"]['correlator'])->update($responseitems);
               }
               elseif(!$response['status'] && isset($response['data']))
               {
@@ -119,7 +126,7 @@ if(!function_exists('sendBatchSMS'))
                     'unit_price' => $response["data"]["unit_price"],
                     'updated_at' => now()  
                 ];
-                DB::table('bonga_smsouts')->where('correlator', $response["data"]['correlator'])->update($responseitems);
+                DB::table('bonga_smsouts')->where('id', $response["data"]['correlator'])->update($responseitems);
               }
               elseif(!$response['status'] && !isset($response['data']))
               {
@@ -129,7 +136,7 @@ if(!function_exists('sendBatchSMS'))
                         'response_message' =>  $response["message"],
                         'updated_at' => now()  
                     ];
-                    DB::table('bonga_smsouts')->where('correlator', $crID)->update($responseitems);
+                    DB::table('bonga_smsouts')->where('id', $crID)->update($responseitems);
                   }
 
               }

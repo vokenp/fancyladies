@@ -73,6 +73,7 @@ return array(
     'App\\Models\\SalesOrder' => $baseDir . '/app/Models/SalesOrder.php',
     'App\\Models\\ShopService' => $baseDir . '/app/Models/ShopService.php',
     'App\\Models\\SmsGroup' => $baseDir . '/app/Models/SmsGroup.php',
+    'App\\Models\\SmsGrouplist' => $baseDir . '/app/Models/SmsGrouplist.php',
     'App\\Models\\SmsTemplate' => $baseDir . '/app/Models/SmsTemplate.php',
     'App\\Models\\Staff' => $baseDir . '/app/Models/Staff.php',
     'App\\Models\\Submenu' => $baseDir . '/app/Models/Submenu.php',

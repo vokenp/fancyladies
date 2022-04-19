@@ -7,11 +7,11 @@
         </div> {{--  End Card Title --}}
 
         <div class="card-toolbar">
-            {{--  <span class="label  label-inline font-weight-boldest mr-2 " style="font-size:16px;">Available SMS Units : {{ $smsBalance["data"]["account_units"] ?? "" }}  Worth Ksh : {{ $smsBalance["data"]["account_balance"] ?? ""}}</span>   --}}
+            <span class="label  label-inline font-weight-boldest mr-2 " style="font-size:16px;">Available SMS Units : {{ $smsBalance["data"]["account_units"] ?? "" }}  Worth Ksh : {{ $smsBalance["data"]["account_balance"] ?? ""}}</span> 
         </div> {{--  End ToolBar --}}
     </div> {{--  End Class Header --}}
     <form name="formDataInfo" id="formDataInfo">
-         {{--  <input type="hidden" name="sms_bal_at" id="sms_bal_at" value="{{ $smsBalance["data"]["account_units"] }}">    --}}
+         <input type="hidden" name="sms_bal_at" id="sms_bal_at" value="{{ $smsBalance["data"]["account_units"] }}">  
     <div class="card-body ">
         <div class="row">
             <div class="col-lg-6 col-sm-6">

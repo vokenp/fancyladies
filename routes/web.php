@@ -49,7 +49,11 @@ Route::group(['prefix' => 'apps','as' => 'apps.', 'namespace' => 'Apps', 'middle
     Route::resource('smspendingbox', 'PendingSMSBoxController');
 
     Route::get('smsgroup/list', 'SmsGroupController@list')->name('smsgroup.list');
+    Route::get('smsgroup/grouplist', 'SmsGroupController@grouplist')->name('smsgroup.grouplist');
+    Route::post('smsgroup/groupStore', 'SmsGroupController@groupStore')->name('smsgroup.groupStore');
+    Route::get('smsgroup/groupdelete', 'SmsGroupController@groupdelete')->name('smsgroup.groupdelete');
     Route::get('smsgroup/chosenlist', 'SmsGroupController@chosenlist')->name('smsgroup.chosenlist');
+    Route::get('smsgroup/groupedit', 'SmsGroupController@groupedit')->name('smsgroup.groupedit');
     Route::resource('smsgroup', 'SmsGroupController');
 
     Route::get('shopservices/list', 'ShopServiceController@list')->name('shopservices.list');
