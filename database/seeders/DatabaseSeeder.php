@@ -13,22 +13,30 @@ class DatabaseSeeder extends Seeder
      *
      * @return void
      */
+
+
+    // $faker = Faker::create();
+    // $gender = $faker->randomElement(['male', 'female']);
+    // foreach (range(1,5000) as $index) {
+    //     DB::table('members')->insert([
+    //         'member_name' => $faker->name($gender),
+    //         'member_no' => 'CFF00'.$faker->unique()->numberBetween($min = 1, $max = 5000),
+    //         'member_dob' => $faker->dateTimeBetween('1980-01-01', '2012-12-31')->format('Y-m-d'),
+    //         'member_idno' => $faker->randomDigit,
+    //         'member_martialstatus' => $faker->randomElement(['Married', 'single','Divorsed']),
+    //         'member_phoneno' => $faker->phoneNumber(),
+    //         'member_email' => $faker->email(),
+    //         'member_gender' => $faker->randomElement(['male', 'female'])
+            
+    //     ]);
+    // }
     public function run()
     {
-        $faker = Faker::create();
-        $gender = $faker->randomElement(['male', 'female']);
-    	foreach (range(1,5000) as $index) {
-            DB::table('members')->insert([
-                'member_name' => $faker->name($gender),
-                'member_no' => 'CFF00'.$faker->unique()->numberBetween($min = 1, $max = 5000),
-                'member_dob' => $faker->dateTimeBetween('1980-01-01', '2012-12-31')->format('Y-m-d'),
-                'member_idno' => $faker->randomDigit,
-                'member_martialstatus' => $faker->randomElement(['Married', 'single','Divorsed']),
-                'member_phoneno' => $faker->phoneNumber(),
-                'member_email' => $faker->email(),
-                'member_gender' => $faker->randomElement(['male', 'female'])
-                
-            ]);
-        }
+        $this->call([
+            CreateUserSeeder::class,
+            MenuBulletSeeder::class,
+            MenuSectionSeeder::class,
+            CustomerSeeder::class,
+        ]);
     }
 }

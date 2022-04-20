@@ -11,6 +11,8 @@ class CreateUsersTable extends Migration
      *
      * @return void
      */
+
+  
     public function up()
     {
         
@@ -43,7 +45,16 @@ class CreateUsersTable extends Migration
 
     private function addColumns()
     {
+        
         Schema::table('users', function (Blueprint $table) {
+
+            if (!Schema::hasColumn('users','created_by')) {
+                $table->foreignId('created_by')->nullable()->constrained('users')->nullOnDelete();
+            }
+
+            if (!Schema::hasColumn('users','updated_by')) {
+                $table->foreignId('updated_by')->nullable()->constrained('users')->nullOnDelete();
+            }
             
             if (!Schema::hasColumn('users', 'name')) {
                 $table->string('name')->nullable();

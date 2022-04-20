@@ -32,6 +32,16 @@ class MenuBulletSeeder extends Seeder
               ]
           ];
 
-          DB::table('listitems')->insert($items);
+          foreach ($items as $item) {
+            $itemType = $item["item_type"];
+            $itemCode = $item["item_code"];
+            $checkExist = ListItem::where([['item_type',$itemType],['item_code',$itemCode]])->exists();
+            if(!$checkExist)
+            {
+                DB::table('listitems')->insert($item);
+            }
+          }
+
+        
     }
 }
