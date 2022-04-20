@@ -34,8 +34,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             CreateUserSeeder::class,
-            MenuBulletSeeder::class,
-            MenuSectionSeeder::class,
+            ListItemSeeder::class,
             CustomerSeeder::class,
         ]);
     }

@@ -49,11 +49,11 @@ class CreateListitemsTable extends Migration
             }
 
             if (!Schema::hasColumn($tableName,'item_type')) {
-                $table->string('item_type')->nullable();
+                $table->string('item_type')->nullable()->index();
             }
 
             if (!Schema::hasColumn($tableName,'item_code')) {
-                $table->string('item_code')->nullable();
+                $table->string('item_code')->nullable()->index();
             }
 
 
