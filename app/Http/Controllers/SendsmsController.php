@@ -5,8 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use BongaTech\Api\BongaTech;
 use BongaTech\Api\Models\Sms;
+use Illuminate\Support\Facades\DB;
+
 use Event;
 use App\Events\SendSMS;
+use App\Models\SmsGrouplist;
 
 class SendsmsController extends Controller
 {
@@ -32,8 +35,12 @@ class SendsmsController extends Controller
 
         //$response = getSmsBalance();
 
-        Event::dispatch(new SendSMS(90));
-        dd("Kenya");
+       // Event::dispatch(new SendSMS(90));
+        //dd("Kenya");
+     
+        $list = SmsGrouplist::select('*')->orderByDesc('created_at');
+
+        return $list;
        
     }
 

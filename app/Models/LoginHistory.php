@@ -21,4 +21,9 @@ class LoginHistory extends Model
         'login_sessionid'
     ];
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
 }

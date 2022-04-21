@@ -19,4 +19,14 @@ class SmsGrouplist extends Model
         'groupmember_category',
         'groupmember_refid'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class,'created_by');
+    }
+
+    public function smsgroup()
+    {
+        return $this->belongsTo(SmsGroup::class,'group_id');
+    }
 }

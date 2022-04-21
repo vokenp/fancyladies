@@ -36,6 +36,7 @@ class DatabaseSeeder extends Seeder
             CreateUserSeeder::class,
             ListItemSeeder::class,
             CustomerSeeder::class,
+            CreateDefEmpSeeder::class,
         ]);
     }
 }

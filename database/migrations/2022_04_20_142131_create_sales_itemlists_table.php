@@ -4,13 +4,13 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSalesOrdersTable extends Migration
+class CreateSalesItemlistsTable extends Migration
 {
     public $tblName;
 
     public function __construct()
     {
-        $this->tblName = "sales_order";
+        $this->tblName = "sales_itemlists";
     }
 
     public function up()
@@ -48,34 +48,37 @@ class CreateSalesOrdersTable extends Migration
                 $table->foreignId('updated_by')->nullable()->constrained('users')->nullOnDelete();
             }
 
-            if (!Schema::hasColumn($tableName,'sales_no')) {
-                $table->string('sales_no')->nullable()->unique();
+            if (!Schema::hasColumn($tableName,'sales_order_id')) {
+                $table->foreignId('sales_order_id')->nullable()->constrained('sales_order')->cascadeOnDelete();
             }
 
-            if (!Schema::hasColumn($tableName,'sales_date')) {
-                $table->date('sales_date')->nullable();
+            if (!Schema::hasColumn($tableName,'shop_service_id')) {
+                $table->foreignId('shop_service_id')->nullable()->constrained('shop_services');
             }
 
-            if (!Schema::hasColumn($tableName,'customer_id')) {
-                $table->foreignId('customer_id')->nullable()->constrained('customers');
+            if (!Schema::hasColumn($tableName,'employee_id')) {
+                $table->foreignId('employee_id')->nullable()->constrained('employees');
             }
 
-            if (!Schema::hasColumn($tableName,'sales_total')) {
-                $table->decimal('sales_total')->nullable();
+            if (!Schema::hasColumn($tableName,'item_amt_expected')) {
+                $table->decimal('item_amt_expected')->nullable();
             }
 
-            if (!Schema::hasColumn($tableName,'payment_status')) {
-                $table->string('payment_status')->nullable();
+            if (!Schema::hasColumn($tableName,'item_amt_paid')) {
+                $table->decimal('item_amt_paid')->nullable();
             }
 
-            if (!Schema::hasColumn($tableName,'mode_ofpayment')) {
-                $table->string('mode_ofpayment')->nullable();
+            if (!Schema::hasColumn($tableName,'item_quantity')) {
+                $table->integer('item_quantity')->nullable();
             }
 
-            if (!Schema::hasColumn($tableName,'sales_remarks')) {
-                $table->string('sales_remarks')->nullable();
+            if (!Schema::hasColumn($tableName,'item_total')) {
+                $table->integer('item_total')->nullable();
             }
 
+            if (!Schema::hasColumn($tableName,'item_discount')) {
+                $table->integer('item_discount')->nullable()->default(0);
+            }
     
         });
     }
