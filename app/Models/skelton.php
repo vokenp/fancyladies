@@ -12,6 +12,7 @@ class skelton extends Model
     protected $fillable = [
         'created_by',
         'update_by',
-        'def_colomn'
+        'def_colomn',
+        'def_text'
     ];
 }

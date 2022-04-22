@@ -15,6 +15,12 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::post('smsdelivery', 'SMSDeliveryController@store')->name('smsdelivery');
+Route::group(['namespace' => 'Apps'], function () {
+
+Route::post('confmptransaction', 'LogMpesaTransactionController@confirmMPTrans')->name('confmptransaction');
+Route::post('validatemptransaction', 'LogMpesaTransactionController@validatemptransaction')->name('validatemptransaction');
+
+});
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();

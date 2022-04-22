@@ -51,6 +51,10 @@ class CreateSkeltonsTable extends Migration
             if (!Schema::hasColumn($tableName,'def_colomn')) {
                 $table->string('def_colomn')->nullable();
             }
+
+            if (!Schema::hasColumn($tableName,'def_text')) {
+                $table->text('def_text')->nullable();
+            }
     
         });
     }
