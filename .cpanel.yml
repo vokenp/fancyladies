@@ -1,0 +1,5 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/fancylad/public_html/fancyapp
+    - /bin/cp -R * $DEPLOYPATH
