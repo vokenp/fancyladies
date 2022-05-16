@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\ListItem;
+c
 
 class ListItemSeeder extends Seeder
 {

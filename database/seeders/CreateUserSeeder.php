@@ -46,7 +46,7 @@ class CreateUserSeeder extends Seeder
             $checkExist = User::where('username', $userName)->exists();
             if(!$checkExist)
             {
-                DB::table('users')->insert($item);
+                User::create($item);
             }
            
          }

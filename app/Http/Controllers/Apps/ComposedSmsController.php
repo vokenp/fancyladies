@@ -30,6 +30,7 @@ class ComposedSmsController extends Controller
     public $editlink;
     public $listlink;
 
+
     public function __construct()
     {
         $this->menuLinkName = "composesms";
@@ -44,6 +45,7 @@ class ComposedSmsController extends Controller
         $this->editlink = 'apps.'.$this->menuLinkName.'.edit';
         $this->listlink = 'apps.'.$this->menuLinkName.'.list';
         $this->viewlink = 'apps.'.$this->menuLinkName.'.show';
+      
     }
 
     public function index()
@@ -67,6 +69,7 @@ class ComposedSmsController extends Controller
             'editAction'    => $this->editlink,
             'tblContent'    =>  $this->tblContentLink,
             'listLink'    =>  $this->listlink,
+            
             'content'    => 'pages.Apps.MyRecords.ComposedSms_page',
             
         ];
@@ -176,6 +179,8 @@ class ComposedSmsController extends Controller
 
         return response()->json(['success'=>'Record saved successfully!']);
     }
+
+
 
     /**
      * Display the specified resource.
