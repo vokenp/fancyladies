@@ -1,6 +1,6 @@
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/fancylad/public_html/fancyapp
+    - export DEPLOYPATH=/home/fancylad/public_html/fancywebapp
     - /bin/cp -R * $DEPLOYPATH
     
