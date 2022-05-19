@@ -24,6 +24,11 @@ Route::get('/route-cache', function() {
     return 'Routes cache cleared';
 });
 
+Route::get('/key-generate', function() {
+    $exitCode = Artisan::call('key:generate');
+    return 'Routes cache cleared';
+});
+
 //Clear route cache:
 Route::get('/route-optimize', function() {
     $exitCode = Artisan::call('optimize');
