@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use Carbon\Carbon;
 class MpesaTransactionController extends Controller
 {
     /**
@@ -61,13 +62,10 @@ class MpesaTransactionController extends Controller
 
         $columns = [];
         $columns[] = array('data' => 'DT_RowIndex', 'name' => 'DT_RowIndex','title' => '#' ,'searchable' =>false,'orderable' =>false);
-        $columns[] = array('data' => 'created_at', 'name' => 'created_at', 'title' =>'Trans Date');
+        $columns[] = array('data' => 'created_at', 'name' => 'created_at.display', 'title' =>'Trans Date');
         $columns[] = array('data' => 'TransID', 'name' => 'TransID', 'title' =>'TransID');
+        $columns[] = array('data' => 'CustomerName', 'name' => 'CustomerName', 'title' =>'Customer Name');
         $columns[] = array('data' => 'TransAmount', 'name' => 'TransAmount', 'title' =>'Trans Amount');
-        $columns[] = array('data' => 'MSISDN', 'name' => 'MSISDN', 'title' =>'Phone No');
-        $columns[] = array('data' => 'FirstName', 'name' => 'FirstName', 'title' =>'First Name');
-        $columns[] = array('data' => 'MiddleName', 'name' => 'MiddleName', 'title' =>'Middle Name');
-        $columns[] = array('data' => 'LastName', 'name' => 'LastName', 'title' =>'Last Name');
         
         $columns[] = array('data' => 'action', 'name' => 'action','title' => 'Actions' ,'searchable' =>false,'orderable' =>false);
         
@@ -81,7 +79,7 @@ class MpesaTransactionController extends Controller
     {
         if ($request->ajax()) {
             
-            $q_user = MpesaTransaction::select('*')->where('id','!=', 0)->orderByDesc('created_at');
+            $q_user = DB::table("mpesa_transactions_view")->where('id','!=', 0)->orderByDesc('created_at');
             return Datatables::of($q_user)
                     ->addIndexColumn()
                     ->addColumn('action', function($row){
@@ -99,6 +97,9 @@ class MpesaTransactionController extends Controller
 
                          return $btn;
                     })
+                    ->editColumn('TransAmount', 'Ksh {{$TransAmount}}')
+                    ->editColumn('created_at', '{{ date("D jS M Y g:i a",strtotime($created_at)) }}')
+                   // ->setRowClass('{{ $id % 3 == 0 ? "alert-success" : "alert-warning" }}')
                     ->rawColumns(['action'])
                     ->make(true);
         }
