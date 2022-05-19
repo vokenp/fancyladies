@@ -39,7 +39,8 @@ class LogMpesaTransactionController extends Controller
         $chunks = $chunks = str_split($CustPhoneNo, 3);
         $formattedPhoneNo = implode('-',$chunks);
         $custFullName = $request->FirstName.' '.$request->MiddleName.' '.$request->LastName;
-        $checkExist = Customer::where('customer_phoneno', $formattedPhoneNo)->exists();
+        $custCode = $request->FirstName.'-'.$CustPhoneNo;
+        $checkExist = Customer::where('customer_code', $custCode)->exists();
 
         $alertMsg = "$custFullName \rTel: $CustPhoneNo \rPaid: Ksh $TransAmount  \rDate: $TransActionDate \rRefNo: $TransID \rBalance : Ksh $OrgAccountBalance";
 
@@ -47,7 +48,7 @@ class LogMpesaTransactionController extends Controller
 
         $msg = array();
         $msg[] = array("phone" => $adminPhoneNo,"message" => $alertMsg,"composedSMSID" => 0);
-        $msg[] = array("phone" => $CustPhoneNo,"message" => $customerMsg,"composedSMSID" => 0);
+       // $msg[] = array("phone" => $CustPhoneNo,"message" => $customerMsg,"composedSMSID" => 0);
 
         if(!$checkExist)
         {
@@ -56,8 +57,9 @@ class LogMpesaTransactionController extends Controller
            $custData = array();
            $custData["customer_phoneno"] = $formattedPhoneNo;
            $custData["customer_name"] = $custFullName;
+           $custData["customer_code"] = $custCode;
            Customer::create($custData);
-           $msg[] = array("phone" => $CustPhoneNo,"message" => $customerWelcomeMsg,"composedSMSID" => 0);
+           //$msg[] = array("phone" => $CustPhoneNo,"message" => $customerWelcomeMsg,"composedSMSID" => 0);
         }
         sendBatchSMS($msg);
         MpesaTransaction::create($request->all());

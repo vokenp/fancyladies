@@ -60,6 +60,10 @@ class CreateCustomersTable extends Migration
             if (!Schema::hasColumn($tableName,'customer_email')) {
                 $table->string('customer_email')->nullable();
             }
+
+            if (!Schema::hasColumn($tableName,'customer_code')) {
+                $table->string('customer_code')->nullable()->index();
+            }
     
         });
     }

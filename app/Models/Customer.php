@@ -13,6 +13,7 @@ class Customer extends Model
         'updated_by',
         'customer_name',
         'customer_phoneno',
-        'customer_email'
+        'customer_email',
+        'customer_code'
     ];
 }
