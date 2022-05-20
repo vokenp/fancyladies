@@ -39,7 +39,9 @@ class LogMpesaTransactionController extends Controller
         $chunks = $chunks = str_split($CustPhoneNo, 3);
         $formattedPhoneNo = implode('-',$chunks);
         $custFullName = $request->FirstName.' '.$request->MiddleName.' '.$request->LastName;
-        $custCode = $request->FirstName.'-'.$CustPhoneNo;
+        $unMaskedPH = str_replace(' ','',$CustPhoneNo);
+        $unMaskedPH = str_replace('*','',$CustPhoneNo);
+        $custCode = $request->FirstName.'-'.$unMaskedPH;
         $checkExist = Customer::where('customer_code', $custCode)->exists();
 
         $alertMsg = "$custFullName \rTel: $CustPhoneNo \rPaid: Ksh $TransAmount  \rDate: $TransActionDate \rRefNo: $TransID \rBalance : Ksh $OrgAccountBalance";
