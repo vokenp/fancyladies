@@ -9,7 +9,8 @@ use Illuminate\Support\Facades\DB;
 
 use Event;
 use App\Events\SendSMS;
-use App\Models\SmsGrouplist;
+use App\Events\ChangedPswdMail;
+
 
 class SendsmsController extends Controller
 {
@@ -18,12 +19,7 @@ class SendsmsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public $instance;
-
-    public function __construct()
-    {
-        $this->instance =  new BongaTech(config('app.BongaToken'));
-    }
+    
 
     public function index()
     {
@@ -37,10 +33,12 @@ class SendsmsController extends Controller
 
        // Event::dispatch(new SendSMS(90));
         //dd("Kenya");
-     
-        $list = SmsGrouplist::select('*')->orderByDesc('created_at');
 
-        return $list;
+        event(new ChangedPswdMail(16));
+     
+       // $list = SmsGrouplist::select('*')->orderByDesc('created_at');
+
+       // return $list;
        
     }
 
